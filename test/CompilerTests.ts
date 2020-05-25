@@ -30,7 +30,7 @@ describe('Compiler', function () {
         TestCompiler("{cell1:`cell2`}{cell2:`cell1`}", "", ["The references form a cycle and that is not supported!"]);
     });
     it('Working Example', function () {
-        TestCompiler("The sum of {a:3} and {b:-2} is {c:`a`*1+`b`*1}, the double of that would be {d:`c`*2}", `<html>
+        TestCompiler("The sum of {a:3} and {b:-2} is {c:`a`+`b`}, the double of that would be {d:`c`*2}", `<html>
 
 <head>
     <title>Calc</title>
@@ -40,6 +40,15 @@ describe('Compiler', function () {
   The sum of <input id="a" type="text" value="3"> and <input id="b" type="text" value="-2"> is <input id="c" type="text" readonly>, the double of that would be <input id="d" type="text" readonly>
     <script>
         (function () {
+            function getValue(field) {
+                var rawValue = field.value;
+                var numberValue = Number(rawValue);
+                if (isNaN(numberValue)) {
+                    return rawValue;
+                } else {
+                    return numberValue;
+                }
+            }
             var a = document.getElementById('a');
             var b = document.getElementById('b');
             var c = document.getElementById('c');
@@ -56,11 +65,11 @@ describe('Compiler', function () {
                 update_d();
             }
             function update_c() {
-                c.value = a.value*1+b.value*1;
+                c.value = getValue(a)+getValue(b);
                 on_c_changed();
             }
             function update_d() {
-                d.value = c.value*2;
+                d.value = getValue(c)*2;
             }
             update_c();
             update_d();

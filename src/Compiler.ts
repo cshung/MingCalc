@@ -152,6 +152,15 @@ ${this.script}
         let result: string;
         result = "";
         result += `        (function () {
+            function getValue(field) {
+                var rawValue = field.value;
+                var numberValue = Number(rawValue);
+                if (isNaN(numberValue)) {
+                    return rawValue;
+                } else {
+                    return numberValue;
+                }
+            }
 `;
         for (let i = 0; i < elements.length; i++) {
             if (elements[i] instanceof CellElement) {
@@ -196,9 +205,10 @@ ${this.script}
                     for (let j = 0; j < cell.value.length; j++) {
                         if (cell.value[j] == '`') {
                             if (first) {
+                                result += "getValue(";
                                 first = false;
                             } else {
-                                result += ".value";
+                                result += ")";
                                 first = true;
                             }
                         } else {
