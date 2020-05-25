@@ -2,6 +2,7 @@ import { Compiler } from './Compiler'
 
 (function () {
     let sourceTextArea: HTMLTextAreaElement;
+    let scriptTextArea: HTMLTextAreaElement;
     let previewDiv: HTMLDivElement;
 
     function BindEvents() {
@@ -10,14 +11,16 @@ import { Compiler } from './Compiler'
 
     function OnWindowLoaded() {
         sourceTextArea = document.getElementById('SourceTextArea') as HTMLTextAreaElement;
+        scriptTextArea = document.getElementById('ScriptTextArea') as HTMLTextAreaElement;
         previewDiv = document.getElementById('PreviewDiv') as HTMLDivElement;
         sourceTextArea.onkeyup = RefreshPreview;
+        scriptTextArea.onkeyup = RefreshPreview;
         RefreshPreview();
     }
 
     function RefreshPreview() {
         let compiler: Compiler = new Compiler();
-        compiler.Compile(sourceTextArea.value);
+        compiler.Compile(sourceTextArea.value, scriptTextArea.value);
         if (compiler.errors.length == 0) {
             previewDiv.innerHTML = compiler.element;
             eval(compiler.script);

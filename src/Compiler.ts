@@ -18,7 +18,7 @@ export class Compiler {
         this.script = "";
     }
 
-    Compile(s: string) {
+    Compile(s: string, additionalScript?: string) {
         let parser: Parser;
         let result: ParseResult;
         let cells: { [name: string]: CellElement; }
@@ -84,7 +84,7 @@ export class Compiler {
         if (this.errors.length != 0) {
             return;
         }
-        this.GenerateCode(result.elements, topologicalOrder);
+        this.GenerateCode(result.elements, topologicalOrder, additionalScript);
     }
 
     private DepthFirstSearch(visiting: CellElement, color: { [name: string]: number; }, topologicalOrder: Array<CellElement>): boolean {
@@ -110,9 +110,9 @@ export class Compiler {
         return true;
     }
 
-    private GenerateCode(elements: Array<IDocumentElement>, topologicalOrder: Array<CellElement>) {
+    private GenerateCode(elements: Array<IDocumentElement>, topologicalOrder: Array<CellElement>, additionalScript?: string) {
         this.element = this.GenerateElements(elements);
-        this.script = this.GenerateScript(elements, topologicalOrder);
+        this.script = this.GenerateScript(elements, topologicalOrder, additionalScript);
         this.output = `<html>
 
 <head>
@@ -148,7 +148,7 @@ ${this.script}
         return result;
     }
 
-    private GenerateScript(elements: Array<IDocumentElement>, topologicalOrder: Array<CellElement>): string {
+    private GenerateScript(elements: Array<IDocumentElement>, topologicalOrder: Array<CellElement>, additionalScript?: string): string {
         let result: string;
         result = "";
         result += `        (function () {
@@ -162,6 +162,9 @@ ${this.script}
                 }
             }
 `;
+        if (additionalScript) {
+            result += additionalScript;
+        }
         for (let i = 0; i < elements.length; i++) {
             if (elements[i] instanceof CellElement) {
                 let cell = elements[i] as CellElement;

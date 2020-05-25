@@ -13,8 +13,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-                <textarea id="SourceTextArea" cols="60" rows="5">The sum of {a:3} and {b:-2} is {c:`a`+`b`}, the double of that would be {d:`c`*2}</textarea>
-                <br />
+                <textarea id="SourceTextArea" cols="60" rows="5">The area of a triangle with sides a = {a}, b = {b}, c = {c} has area {ans:area(`a`,`b`,`c`)}</textarea>
+                <textarea id="ScriptTextArea" cols="60" rows="5">function area(a,b,c) {
+    var s = (a + b + c) / 2;
+    return Math.sqrt(s * (s - a) * (s - b) * (s - c));
+}</textarea>
             </div>
             <div class="col-lg-6">
                 <div id="PreviewDiv"></div>
