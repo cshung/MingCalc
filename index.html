@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>MingCalc - A calculator generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="jumbotron text-center">
+        <h1>MingCalc - A calculator generator</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <textarea id="SourceTextArea" cols="60" rows="5">The sum of {a:3} and {b:-2} is {c:`a`*1+`b`*1}, the double of that would be {d:`c`*2}</textarea>
+                <br />
+            </div>
+            <div class="col-lg-6">
+                <div id="PreviewDiv"></div>
+            </div>
+        </div>
+    </div>
+    <script src="dist/main.js"></script>
+</body>
+
+</html>
