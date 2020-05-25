@@ -4,7 +4,7 @@ Excel is a great tool to calculate things, but there are three things I don't li
 
 - Even if my inputs doesn't look like table, it has to be layout in the table like form, I would like to make it look like a document, line by line, but not cell by cell.
 - Formulas refer to values through weird names like `A12`, whoever reading the formula must have no idea what `A12` is until he cross check back to the table.
-- The file format is opaque, I couldn't see the diff if someone modify a formula. If I goes for CSV, the formulas are gone.
+- The file format is opaque, I couldn't see the diff if someone modify a formula. If I go for CSV, the formula are gone.
 
 Inspired by that, I decided to build this calculator generator. The goal is to mix document and spreadsheet and nail the three pain points above.
 
