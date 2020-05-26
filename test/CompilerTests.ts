@@ -16,13 +16,11 @@ describe('Compiler', function () {
     }
 
     it('ParseError', function () {
-        TestCompiler("}", "", ["} unexpected at line 1 column 1."]);
+        TestCompiler("}", "", ["{ expected at line 1 column 1."]);
     });
-
     it('DuplicateId', function () {
         TestCompiler("{a}{a}", "", ["Cell at (1, 4) - (1, 6) with name 'a' already defined at (1, 1) - (1, 3)"]);
     });
-
     it('Undefined reference', function () {
         TestCompiler("{cell:`a`}", "", ["Reference at (1, 7) - (1, 9) to a cell named 'a' does not exist."]);
     });

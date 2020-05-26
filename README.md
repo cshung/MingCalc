@@ -11,7 +11,7 @@ Inspired by that, I decided to build this calculator generator. The goal is to m
 With my tool, the user can simply enter this in my page:
 
 ```
-The sum of {a:3} and {b:-2} is {c:`a`*1+`b`*1}, the double of that would be {d:`c`*2}
+The sum of {a:3} and {b:-2} is {c:`a`+`b`}, the double of that would be {d:`c`*2}
 ```
 
 and this will turn into a webpage that allows you modify `a` and `b` it will automatically refresh `c` and `d`.
@@ -32,17 +32,17 @@ This project can be used standalone as the webpage operates completely on the cl
 
 Here is the TypeScript used to perform a compilation.
 ```ts
-        let compiler: Compiler = new Compiler();
-        compiler.Compile(sourceTextArea.value);
-        if (compiler.errors.length == 0) {
-            previewDiv.innerHTML = compiler.element;
-            eval(compiler.script);
-        } else {
-            previewDiv.innerHTML = "";
-            for (let i = 0; i < compiler.errors.length; i++) {
-                previewDiv.innerHTML += compiler.errors[i] + "<br/>";
-            }
-        }
+let compiler: Compiler = new Compiler();
+compiler.Compile(sourceTextArea.value);
+if (compiler.errors.length == 0) {
+    previewDiv.innerHTML = compiler.element;
+    eval(compiler.script);
+} else {
+    previewDiv.innerHTML = "";
+    for (let i = 0; i < compiler.errors.length; i++) {
+        previewDiv.innerHTML += compiler.errors[i] + "<br/>";
+    }
+}
 ```
 Note that the compiler produces two outputs - the `compiler.element` is the HTML content that represents the document text. This does not contain any scripts for refreshing the values.
 

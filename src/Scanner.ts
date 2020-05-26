@@ -8,31 +8,31 @@ export class Scanner {
     private p: number;
     private expectingIdentifier: boolean;
 
-    pl: number;
-    pc: number;
-    l: number;
-    c: number;
+    previousLine: number;
+    previousColumn: number;
+    line: number;
+    column: number;
     backTicks: Array<BackTick>;
 
     constructor(s: string) {
         this.s = s;
         this.p = 0;
         this.expectingIdentifier = false;
-        this.pl = 0;
-        this.pc = 0;
-        this.l = 1;
-        this.c = 1;
+        this.previousLine = 0;
+        this.previousColumn = 0;
+        this.line = 1;
+        this.column = 1;
         this.backTicks = [];
     }
 
     private AdvancePosition(): void {
-        this.pl = this.l;
-        this.pc = this.c;
+        this.previousLine = this.line;
+        this.previousColumn = this.column;
         if (this.s[this.p] == '\n') {
-            this.l = this.l + 1;
-            this.c = 1;
+            this.line = this.line + 1;
+            this.column = 1;
         } else {
-            this.c = this.c + 1;
+            this.column = this.column + 1;
         }
         this.p = this.p + 1;
     }
@@ -97,7 +97,7 @@ export class Scanner {
                                 this.AdvancePosition();
                             }                            
                         } else if (this.s[this.p] == '`') {
-                            this.backTicks.push(new BackTick(this.l, this.c, this.p - textPosition));
+                            this.backTicks.push(new BackTick(this.line, this.column, this.p - textPosition));
                         }
                         if (terminated) {
                             return new Token(TokenType.TEXT, i, this.p);

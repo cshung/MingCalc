@@ -44,32 +44,44 @@ describe('Parser', function () {
     it('Complex Cell', function () {
         TestParser("{a:1}", [new CellElement("a", "1", [])], []);
     });
-    it('Unclosed Reference', function () {
-        TestParser("{cell:`a}", [], ["Reference starting at (1, 7) is not closed."]);
-    });
     it('Example', function () {
-        TestParser("The sum of {a} and {b} is {c:a+b}", [
+        TestParser("The sum of {a} and {b} is {c:`a`+`b`}", [
             new TextElement("The sum of "),
             new CellElement("a", "", []),
             new TextElement(" and "),
             new CellElement("b", "", []),
             new TextElement(" is "),
-            new CellElement("c", "a+b", [])
+            new CellElement("c", "`a`+`b`", [])
         ], []);
     });
-    it('Close brace unexpected', function () {
-        TestParser("Hello World\n}Cruel World", [new TextElement("Hello World\n"), new TextElement("Cruel World")], ["} unexpected at line 2 column 1."]);
+    it('Open brace expected 1', function () {
+        TestParser("Hello World\n}Cruel World", [new TextElement("Hello World\n"), new TextElement("Cruel World")], ["{ expected at line 2 column 1."]);
     });
-    it('Colon unexpected', function () {
-        TestParser("Hello World\n:Cruel World", [new TextElement("Hello World\n"), new TextElement("Cruel World")], [": unexpected at line 2 column 1."]);
+    it('Open brace expected 2', function () {
+        TestParser("Hello World\n:Cruel World", [new TextElement("Hello World\n"), new TextElement("Cruel World")], ["{ expected at line 2 column 1."]);
     });
-    it('Missing ID', function () {
-        TestParser("Hello {:} World", [new TextElement("Hello "), new TextElement(" World")], ["Cell identifier expected at 1 column 8."]);
+    it('Cell identifier expected', function () {
+        TestParser("Hello {:} World", [new TextElement("Hello "), new TextElement(" World")], ["Cell identifier expected at line 1 column 8."]);
     });
-    it('Unexpected EOF', function () {
-        TestParser("{a", [], ["EOF unexpected at line 1 column 2."]);
+    it('Close brace or colon expected 1', function () {
+        TestParser("{a", [], ["} or : expected at line 1 column 2."]);
     });
-    it('Unexpected Open Brace', function () {
-        TestParser("{a{", [], ["{ unexpected at line 1 column 3."]);
+    it('Close brace or colon expected 2', function () {
+        TestParser("{a{", [], ["} or : expected at line 1 column 3."]);
+    });
+    it('Expression expected 1', function () {
+        TestParser("{a:", [], ["Expression expected at line 1 column 3."]);
+    });
+    it('Expression expected 2', function () {
+        TestParser("{a:}", [], ["Expression expected at line 1 column 4."]);
+    });
+    it('Close brace expected 1', function () {
+        TestParser("{a:1", [], ["} expected at line 1 column 4."]);
+    });    
+    it('Close brace expected 2', function () {
+        TestParser("{a:1:", [], ["} expected at line 1 column 5."]);
+    });
+    it('Unclosed Reference', function () {
+        TestParser("{cell:`a}", [], ["Reference starting at (1, 7) is not closed."]);
     });
 });
