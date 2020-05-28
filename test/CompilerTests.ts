@@ -64,10 +64,12 @@ describe('Compiler', function () {
             }
             function update_c() {
                 c.value = getValue(a)+getValue(b);
+                adjustWidth(c);
                 on_c_changed();
             }
             function update_d() {
                 d.value = getValue(c)*2;
+                adjustWidth(d);
             }
             update_c();
             update_d();

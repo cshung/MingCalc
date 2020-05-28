@@ -220,6 +220,9 @@ ${this.script}
                     }
                     result += `;
 `;
+                    // TODO: Remove this ugly hack (which looks great btw)
+                    result += `                adjustWidth(${cell.name});
+`
                     if (cell.referencedBy.length > 0) {
                         result += `                on_${cell.name}_changed();
 `;
