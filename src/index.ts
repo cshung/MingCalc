@@ -24,6 +24,10 @@ import { Compiler } from './Compiler'
         if (compiler.errors.length == 0) {
             previewDiv.innerHTML = compiler.element;
             eval(compiler.script);
+            let inputs = document.getElementsByTagName('input');
+            for (let i = 0; i < inputs.length; i++) {
+                adjustWidth(inputs[i]);
+            }
         } else {
             previewDiv.innerHTML = "";
             for (let i = 0; i < compiler.errors.length; i++) {
@@ -32,5 +36,15 @@ import { Compiler } from './Compiler'
         }
     }
 
+    function adjustWidth(input: HTMLInputElement) {
+        let span = document.createElement("span");
+        span.textContent = input.value;
+        document.body.appendChild(span);
+        input.style.width = (span.getBoundingClientRect().width + 40) + "px";
+        document.body.removeChild(span);
+        input.onkeyup = function(){adjustWidth(input);};
+    }
+
+    
     BindEvents();
 })();
