@@ -20,11 +20,11 @@ and this will turn into a webpage that allows you modify `a` and `b` it will aut
 
 Use `npm install` to install the necessary dependencies.
 
-Use `npm tsc` to compile the type script
+Use `npx tsc` to compile the type script
 
-Use `npm mocha ./dist/test` to run the unit tests
+Use `npx mocha ./dist/test` to run the unit tests
 
-Use `npm webpack` to build the website.
+Use `npx webpack` to build the website.
 
 # APIs
 
